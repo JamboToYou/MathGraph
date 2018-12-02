@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Xml.Linq;
 using MathGraph.Core.Exceptions;
 
@@ -31,9 +33,27 @@ namespace MathGraph.Core.Entities.Utils
 
 		private Graph ParseFromMatrix(XElement xmlGraph)
 		{
-			foreach (var row in xmlGraph.Element("rows").Elements())
+			var graph = new Graph();
+			var rows = xmlGraph.Element("rows").Elements();
+			Node node = null;
+			var readNodes = new List<int>();
+
+			for (int i = 0; i < rows.Count(); i++)
 			{
-				
+				node = new Node();
+				readNodes.Add(node.ID);
+				graph.AddNode(node);
+			}
+
+			for (int i = 0; i < rows.Count(); i++)
+			{
+				var edgesWeights = rows.ToList()[i].Value.Split(';');
+				for (int j = 0; j < edgesWeights.Length; j++)
+				{
+					//
+					graph.AddEdge(readNodes[i], readNodes[j], true, float.Parse(edgesWeights[j]));
+					//
+				}
 			}
 
 			return null;
