@@ -1,4 +1,5 @@
 ﻿using System;
+using MathGraph.Core.Entities.Factories;
 
 namespace MathGraph
 {
@@ -6,7 +7,8 @@ namespace MathGraph
 	{
 		static void Main(string[] args)
 		{
-			return;
+			var graph = GraphFactory.LoadGraphFromFile(@"/home/jambo/Jambo/edu/prog/graphs/MathGraph/MathGraph/AppData/testGraph.xml");
+			Console.WriteLine(graph);
 		}
 	}
 }

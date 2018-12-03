@@ -1,6 +1,7 @@
 using System;
+using MathGraph.Core.Entities;
 
-namespace MathGraph.Core.Entities.Utils
+namespace MathGraph.Core.Utils
 {
 	public abstract class GraphParser
 	{

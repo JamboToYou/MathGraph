@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using MathGraph.Core.Exceptions;
 
 namespace MathGraph.Core.Entities
@@ -115,5 +116,16 @@ namespace MathGraph.Core.Entities
 			Edges.Find(edge =>
 				edge.IsIncidentTo(nodeID1) &&
 				edge.IsIncidentTo(nodeID2))?.Weight;
+
+		public override string ToString()
+		{
+			var stringBuilder = new StringBuilder();
+			foreach (var edge in Edges)
+			{
+				stringBuilder.AppendLine($"({edge.Nodes.Item1}, {edge.Nodes.Item2})	:	[{edge.Weight}]");
+			}
+
+			return stringBuilder.ToString();
+		}
 	}
 }

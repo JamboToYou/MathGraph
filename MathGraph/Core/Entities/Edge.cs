@@ -7,7 +7,7 @@ namespace MathGraph.Core.Entities
 {
 	public class Edge : Identified
 	{
-		private Tuple<Node, Node> Nodes { get; }
+		public Tuple<Node, Node> Nodes { get; }
 		public float Weight { get; set; }
 
 		public Edge(Node node1, Node node2, float weight = 1)

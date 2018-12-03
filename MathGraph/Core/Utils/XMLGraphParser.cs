@@ -2,9 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
+using MathGraph.Core.Entities;
 using MathGraph.Core.Exceptions;
 
-namespace MathGraph.Core.Entities.Utils
+namespace MathGraph.Core.Utils
 {
 	public class XMLGraphParser : GraphParser
 	{
@@ -34,29 +35,34 @@ namespace MathGraph.Core.Entities.Utils
 		private Graph ParseFromMatrix(XElement xmlGraph)
 		{
 			var graph = new Graph();
-			var rows = xmlGraph.Element("rows").Elements();
 			Node node = null;
 			var readNodes = new List<int>();
+			var nodesGrid = xmlGraph
+				.Element("rows")
+				.Elements()
+				.Select(row =>
+					row.Value.Split(';'))
+				.ToArray();
 
-			for (int i = 0; i < rows.Count(); i++)
+			for (int i = 0; i < nodesGrid.Length; i++)
 			{
 				node = new Node();
 				readNodes.Add(node.ID);
 				graph.AddNode(node);
 			}
 
-			for (int i = 0; i < rows.Count(); i++)
+			for (int i = 0; i < nodesGrid.Length; i++)
 			{
-				var edgesWeights = rows.ToList()[i].Value.Split(';');
-				for (int j = 0; j < edgesWeights.Length; j++)
+				for (int j = 0; j < nodesGrid.Length; j++)
 				{
-					//
-					graph.AddEdge(readNodes[i], readNodes[j], true, float.Parse(edgesWeights[j]));
-					//
+					if (i == j)
+						continue;
+
+					graph.AddEdge(readNodes[i], readNodes[j], true, float.Parse(nodesGrid[i][j]));
 				}
 			}
 
-			return null;
+			return graph;
 		}
 	}
 }

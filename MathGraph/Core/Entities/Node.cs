@@ -5,7 +5,10 @@ namespace MathGraph.Core.Entities
 	public class Node : Identified
 	{
 		public Dictionary<Node, Edge> Nodes { get; set; }
-		public Node() : base() { }
+		public Node() : base()
+		{
+			Nodes = new Dictionary<Node, Edge>();
+		}
 
 		public override bool Equals(object obj)
 		{
