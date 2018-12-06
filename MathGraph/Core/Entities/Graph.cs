@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MathGraph.Core.Entities.Enumerations;
 using MathGraph.Core.Exceptions;
 
 namespace MathGraph.Core.Entities
@@ -126,6 +127,19 @@ namespace MathGraph.Core.Entities
 			}
 
 			return stringBuilder.ToString();
+		}
+
+		public string ToString(GraphDisplayModes mode)
+		{
+			var stringBuilder = new StringBuilder();
+
+			switch (mode)
+			{
+				case GraphDisplayModes.AdjencyList:
+					return ToString();
+				default:
+					throw new NotImplementedException();
+			}
 		}
 	}
 }

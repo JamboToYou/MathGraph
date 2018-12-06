@@ -1,0 +1,31 @@
+<graph type="adjlist">
+	<nodes>
+		<node id="0" />
+		<node id="1" />
+		<node id="2" />
+		<node id="3" />
+		<node id="4" />
+		<node id="5" />
+		<node id="6" />
+		<node id="7" />
+		<node id="8" />
+	</nodes>
+	<edges>
+		<edge isDirect="false" nodeFrom="0" nodeTo="4" />
+		<edge isDirect="true" nodeFrom="0" nodeTo="5" />
+		<edge isDirect="false" nodeFrom="1" nodeTo="2" />
+		<edge isDirect="false" nodeFrom="1" nodeTo="4" />
+		<edge isDirect="false" nodeFrom="1" nodeTo="7" />
+		<edge isDirect="true" nodeFrom="2" nodeTo="4" />
+		<edge isDirect="false" nodeFrom="2" nodeTo="4" />
+		<edge isDirect="false" nodeFrom="2" nodeTo="4" />
+		<edge isDirect="true" nodeFrom="2" nodeTo="4" />
+		<edge isDirect="false" nodeFrom="3" nodeTo="4" />
+		<edge isDirect="true" nodeFrom="4" nodeTo="4" />
+		<edge isDirect="true" nodeFrom="4" nodeTo="4" />
+		<edge isDirect="false" nodeFrom="5" nodeTo="4" />
+		<edge isDirect="false" nodeFrom="5" nodeTo="4" />
+		<edge isDirect="false" nodeFrom="6" nodeTo="4" />
+		<edge isDirect="false" nodeFrom="6" nodeTo="7" />
+	</edges>
+</graph>
