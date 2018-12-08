@@ -2,17 +2,17 @@ using System.Collections.Generic;
 
 namespace MathGraph.Core.Entities
 {
-	public class Node : Identified
+	public class Node<N> : Identified
 	{
-		public Dictionary<Node, Edge> Nodes { get; set; }
+		public List<Node<N>> Nodes { get; set; }
 		public Node() : base()
 		{
-			Nodes = new Dictionary<Node, Edge>();
+			Nodes = new List<Node<N>>();
 		}
 
 		public override bool Equals(object obj)
 		{
-			var node = obj as Node;
+			var node = obj as Node<N>;
 			return node == null ? false : this.ID == node.ID;
 		}
 

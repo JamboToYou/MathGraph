@@ -7,13 +7,13 @@ using MathGraph.Core.Exceptions;
 
 namespace MathGraph.Core.Entities
 {
-	public class Graph
+	public class Graph<T, N>
 	{
 
 		#region Properties and fields
 
-		protected List<Node> Nodes { get; }
-		protected List<Edge> Edges { get; }
+		protected List<Node<N>> Nodes { get; }
+		protected List<Edge<T, N>> Edges { get; }
 
 		public int NodesCount
 		{
@@ -35,12 +35,12 @@ namespace MathGraph.Core.Entities
 
 		public Graph()
 		{
-			Nodes = new List<Node>(20);
-			Edges = new List<Edge>(20);
+			Nodes = new List<Node<N>>(20);
+			Edges = new List<Edge<T, N>>(20);
 		}
 
 		#region CRUD with nodes
-		public void AddNode(Node node)
+		public void AddNode(Node<N> node)
 		{
 			if (!Nodes.Any(n => n.Equals(node)))
 			{
@@ -48,36 +48,36 @@ namespace MathGraph.Core.Entities
 			}
 		}
 
-		public bool RemoveNode(Node node)
+		public bool RemoveNode(Node<N> node)
 		{
 			return Nodes.Remove(node);
 		}
 
-		public Node GetNode(int nodeID) => Nodes.Find(node => node.ID == nodeID);
+		public Node<N> GetNode(int nodeID) => Nodes.Find(node => node.ID == nodeID);
 
 		#endregion
 
 		#region CRUD with edges
 
-		public void AddEdge(int nodeId1, int nodeId2, bool isDirect = false, float weight = 1)
+		public void AddEdge(int nodeId1, int nodeId2, bool isDirect = false, T weight = default(T))
 		{
-			Node node1 = null;
-			Node node2 = null;
+			Node<N> node1 = null;
+			Node<N> node2 = null;
 			try
 			{
 				node1 = Nodes.Find(node => node.ID == nodeId1);
 				node2 = Nodes.Find(node => node.ID == nodeId2);
 
-				var edge = new Edge(node1, node2, weight);
+				var edge = new Edge<T, N>(node1, node2, weight);
 
 				if (!Edges.Any(e => e.Equals(edge)))
 				{
 					Edges.Add(edge);
 				}
 
-				node1.Nodes.Add(node2, edge);
+				node1.Nodes.Add(node2);
 				if (!isDirect)
-					node2.Nodes.Add(node1, edge);
+					node2.Nodes.Add(node1);
 
 			}
 			catch (InvalidNodeReferenceException ex)
@@ -90,15 +90,15 @@ namespace MathGraph.Core.Entities
 			}
 		}
 
-		public Edge GetEdge(int node1, int node2) => Edges.Find(edge => edge.IsIncidentTo(node1) && edge.IsIncidentTo(node2));
+		public Edge<T, N> GetEdge(int node1, int node2) => Edges.Find(edge => edge.IsIncidentTo(node1) && edge.IsIncidentTo(node2));
 
-		public bool RemoveEdge(Edge edge) => Edges.Remove(edge);
+		public bool RemoveEdge(Edge<T, N> edge) => Edges.Remove(edge);
 
 		public bool RemoveEdge(int node1, int node2) => RemoveEdge(GetEdge(node1, node2));
 
 		#endregion
 
-		public bool AreNodesAdjecent(Node node1, Node node2) =>
+		public bool AreNodesAdjecent(Node<N> node1, Node<N> node2) =>
 			Edges.Any(edge =>
 				edge.IsIncidentTo(node1) &&
 				edge.IsIncidentTo(node2));
@@ -108,22 +108,22 @@ namespace MathGraph.Core.Entities
 				edge.IsIncidentTo(nodeID1) &&
 				edge.IsIncidentTo(nodeID2));
 
-		public float? GetEdgeWeight(Node node1, Node node2) =>
+		public T GetEdgeWeight(Node<N> node1, Node<N> node2) =>
 			Edges.Find(edge =>
 				edge.IsIncidentTo(node1) &&
-				edge.IsIncidentTo(node2))?.Weight;
+				edge.IsIncidentTo(node2)).Value;
 
-		public float? GetEdgeWeight(int nodeID1, int nodeID2) =>
+		public T GetEdgeWeight(int nodeID1, int nodeID2) =>
 			Edges.Find(edge =>
 				edge.IsIncidentTo(nodeID1) &&
-				edge.IsIncidentTo(nodeID2))?.Weight;
+				edge.IsIncidentTo(nodeID2)).Value;
 
 		public override string ToString()
 		{
 			var stringBuilder = new StringBuilder();
 			foreach (var edge in Edges)
 			{
-				stringBuilder.AppendLine($"({edge.Nodes.Item1}, {edge.Nodes.Item2})	:	[{edge.Weight}]");
+				stringBuilder.AppendLine($"({edge.Nodes.Item1}, {edge.Nodes.Item2})	:	[{edge.Value}]");
 			}
 
 			return stringBuilder.ToString();
