@@ -4,27 +4,22 @@ using MathGraph.Core.Utils;
 
 namespace MathGraph.Core.Entities.Factories
 {
-	public static class GraphFactory
+	public static class GraphFactory<T, N>
 	{
-		public static Graph CreateEmptyGraph() => new Graph();
-		public static Graph LoadGraphFromFile(string fileName)
+		public static Graph<T, N> CreateEmptyGraph() => new Graph<T, N>();
+		public static Graph<T, N> LoadGraphFromFile(string fileName)
 		{
 			var fileExtension = fileName.Split('.').Last();
-			GraphParser parser = null;
 
 			switch (fileExtension)
 			{
 				case "xml":
-					parser = new XMLGraphParser(fileName);
-					break;
+					return new XMLGraphParser<T, N>(fileName).Parse();
 				case "txt":
-					parser = new TextGraphParser(fileName);
-					break;
+					return new TextGraphParser<T, N>(fileName).Parse();
 				default:
 					throw new NotSupportedException("Unable to use given file extension");
 			}
-
-			return parser.Parse();
 		}
 	}
 }

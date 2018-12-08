@@ -3,7 +3,7 @@ using MathGraph.Core.Entities;
 
 namespace MathGraph.Core.Utils
 {
-	public abstract class GraphParser
+	public abstract class GraphParser<T, N>
 	{
 		protected string FileName { get; set; }
 		public GraphParser(string fileName)
@@ -11,6 +11,6 @@ namespace MathGraph.Core.Utils
 			FileName = fileName;
 		}
 
-		public abstract Graph Parse();
+		public abstract Graph<T, N> Parse();
 	}
 }

@@ -7,14 +7,14 @@ using MathGraph.Core.Exceptions;
 
 namespace MathGraph.Core.Utils
 {
-	public class XMLGraphParser : GraphParser
+	public class XMLGraphParser<T, N> : GraphParser<T, N>
 	{
 		public XMLGraphParser(string fileName) : base(fileName) { }
-		public override Graph Parse()
+		public override Graph<T, N> Parse()
 		{
 			var xmlGraph = XDocument.Load(FileName).Root;
 
-			var result = new Graph();
+			var result = new Graph<T, N>();
 
 			switch (xmlGraph.Attribute("type").Value)
 			{
@@ -27,15 +27,15 @@ namespace MathGraph.Core.Utils
 			}
 		}
 
-		private Graph ParseFromAdjList(XElement xmlGraph)
+		private Graph<T, N> ParseFromAdjList(XElement xmlGraph)
 		{
 			throw new NotImplementedException();
 		}
 
-		private Graph ParseFromMatrix(XElement xmlGraph)
+		private Graph<T, N> ParseFromMatrix(XElement xmlGraph)
 		{
-			var graph = new Graph();
-			Node node = null;
+			var graph = new Graph<T, N>();
+			Node<N> node = null;
 			var readNodes = new List<int>();
 			var nodesGrid = xmlGraph
 				.Element("rows")
@@ -46,7 +46,7 @@ namespace MathGraph.Core.Utils
 
 			for (int i = 0; i < nodesGrid.Length; i++)
 			{
-				node = new Node();
+				node = new Node<N>();
 				readNodes.Add(node.ID);
 				graph.AddNode(node);
 			}
@@ -58,7 +58,7 @@ namespace MathGraph.Core.Utils
 					if (i == j)
 						continue;
 
-					graph.AddEdge(readNodes[i], readNodes[j], true, float.Parse(nodesGrid[i][j]));
+					graph.AddEdge(readNodes[i], readNodes[j], true, git);
 				}
 			}
 

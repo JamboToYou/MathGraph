@@ -59,7 +59,7 @@ namespace MathGraph.Core.Entities
 
 		#region CRUD with edges
 
-		public void AddEdge(int nodeId1, int nodeId2, bool isDirect = false, T weight = default(T))
+		public void AddEdge(int nodeId1, int nodeId2, bool isDirect = false, T value = default(T))
 		{
 			Node<N> node1 = null;
 			Node<N> node2 = null;
@@ -68,7 +68,7 @@ namespace MathGraph.Core.Entities
 				node1 = Nodes.Find(node => node.ID == nodeId1);
 				node2 = Nodes.Find(node => node.ID == nodeId2);
 
-				var edge = new Edge<T, N>(node1, node2, weight);
+				var edge = new Edge<T, N>(node1, node2, value);
 
 				if (!Edges.Any(e => e.Equals(edge)))
 				{
