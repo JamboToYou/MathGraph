@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using MathGraph.Applications;
 using MathGraph.Entities;
 
 namespace MathGraph
@@ -9,13 +10,13 @@ namespace MathGraph
 	{
 		static void Main(string[] args)
 		{
-			var graph = GraphLoader.LoadGraph(@"/home/jambo/Jambo/edu/prog/graphs/MathGraph/Graphs/test.txt");
-			Console.WriteLine(graph.ToString(Graph.TO_STRING_MODE_MATRIX));
-			Console.WriteLine();
-			Console.WriteLine();
-			Console.WriteLine();
-			Console.WriteLine();
-			Console.WriteLine(graph.ToString(Graph.TO_STRING_MODE_ADJLIST));
+			var scenario = FordBellman.GetScenario();
+			if (args.Length != 0)
+				scenario.Invoke(args);
+			else
+				Console.WriteLine("No arguments were given");
+
+			Console.WriteLine("\nPress Enter to exit. . .");
 			Console.ReadLine();
 		}
 	}

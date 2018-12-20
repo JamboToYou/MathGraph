@@ -1,18 +1,33 @@
+using System;
+
 namespace MathGraph.Applications
 {
 	public class Scenario
 	{
-		public string[] Args { get; private set; }
-		public Action<string[]> Init { get; private set; }
-		public Action<string[]> Run { get; private set; }
+		public Func<string[], bool> Init { get; private set; }
+		public Func<string[], bool> Run { get; private set; }
 		public Func<string[], string> Display { get; private set; }
+		public Func<string> GetError { get; set; }
 
-		public Scenario(Action<string[]> init, Action<string[]> run, Func<string[], string> display, params string[] args)
+		public Scenario(Func<string[], bool> init, Func<string[], bool> run, Func<string[], string> display, Func<string> getError)
 		{
-			Args = args;
 			Init = init;
 			Run = run;
 			Display = display;
+			GetError = getError;
+		}
+
+		public void Invoke(string[] args)
+		{
+			if (Init(args))
+			{
+				Run(args);
+				Console.WriteLine(Display(args));
+			}
+			else
+			{
+				Console.WriteLine(GetError());
+			}
 		}
 	}
 }

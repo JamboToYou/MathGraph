@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,7 @@ namespace MathGraph.Entities
 		public static string TO_STRING_MODE_ADJLIST = "adjlist";
 		public List<int> Nodes { get; set; }
 		public List<List<float?>> Edges { get; set; }
+		public int Count { get { return Nodes.Count; } }
 
 		public Graph()
 		{
@@ -43,12 +45,17 @@ namespace MathGraph.Entities
 
 			if (node1Edges.Count <= node2)
 			{
-				for (int i = node1Edges.Count; i < node2; i++)
+				for (int i = node1Edges.Count; i <= node2; i++)
 					node1Edges.Add(null);
 				node1Edges.Add(weight);
 			}
 			else
+			{
+				Console.WriteLine(Count);
+				Console.WriteLine(node1);
+				Console.WriteLine(node2);
 				node1Edges[node1] = node2;
+			}
 		}
 
 		public bool IsAdjent(int node1, int node2)
