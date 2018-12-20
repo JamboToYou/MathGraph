@@ -41,20 +41,15 @@ namespace MathGraph.Entities
 				!weight.HasValue)
 				return;
 
-			var node1Edges = Edges[node1];
-
-			if (node1Edges.Count <= node2)
+			if (Edges[node1].Count <= node2)
 			{
-				for (int i = node1Edges.Count; i <= node2; i++)
-					node1Edges.Add(null);
-				node1Edges.Add(weight);
+				for (int i = Edges[node1].Count; i < node2; i++)
+					Edges[node1].Add(null);
+				Edges[node1].Add(weight);
 			}
 			else
 			{
-				Console.WriteLine(Count);
-				Console.WriteLine(node1);
-				Console.WriteLine(node2);
-				node1Edges[node1] = node2;
+				Edges[node1][node2] = weight;
 			}
 		}
 

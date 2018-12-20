@@ -55,7 +55,7 @@ namespace MathGraph.Applications
 		{
 			try
 			{
-				for (int i = 0; i < _graph.Count; i++)
+				for (int i = 0; i < _graph.Count-1; i++)
 					for (int j = 0; j < _edges.Count; j++)
 						if (_costs[_edges[j].Item1] < MAX_WEIGHT)
 							if (_costs[_edges[j].Item2] > _costs[_edges[j].Item1] + _edges[j].Item3)
@@ -80,7 +80,7 @@ namespace MathGraph.Applications
 				{
 					result.AppendLine($"[{i}] ==> {_costs[i]}");
 				}
-				result.AppendLine(_graph.ToString());
+				result.AppendLine(_graph.ToString(Graph.TO_STRING_MODE_MATRIX));
 				return result.ToString();
 			}
 			catch (Exception ex)
