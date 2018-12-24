@@ -76,7 +76,7 @@ namespace MathGraph.Entities
 			{
 				var orderedNodes = Nodes.OrderBy(e => e);
 				stringBuilder.AppendLine(" \t" + string.Join('\t', orderedNodes));
-				foreach (var node in Nodes)
+				foreach (var node in Nodes.OrderBy(e => e))
 					stringBuilder.AppendLine(node + "\t" + string.Join('\t',
 						Edges[node].Select(weight => weight.HasValue ? weight.ToString() : "<i>")));
 

@@ -26,9 +26,10 @@ namespace MathGraph.Applications
 					_error = "Given node value isn't an integer or doesn't exist in given graph";
 					return false;
 				}
+				_startNode = tmp;
 
 				_costs = new List<float>(_graph.Count);
-				for (int i = 0; i < _graph.Count - 1; i++)
+				for (int i = 0; i < _graph.Count; i++)
 					_costs.Add(MAX_WEIGHT);
 				_costs[_startNode] = 0;
 
