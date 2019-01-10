@@ -75,10 +75,24 @@ namespace MathGraph.Entities
 			if (outType == "matrix")
 			{
 				var orderedNodes = Nodes.OrderBy(e => e);
+				var tmpRow = new List<float?>();
+
 				stringBuilder.AppendLine(" \t" + string.Join('\t', orderedNodes));
-				foreach (var node in Nodes.OrderBy(e => e))
+
+				foreach (var node in orderedNodes)
+				{
+					tmpRow.Clear();
+					foreach (var edgesNode in orderedNodes)
+					{
+						if (edgesNode < Edges[node].Count)
+							tmpRow.Add(Edges[node][edgesNode]);
+						else
+							tmpRow.Add(null);
+					}
+
 					stringBuilder.AppendLine(node + "\t" + string.Join('\t',
-						Edges[node].Select(weight => weight.HasValue ? weight.ToString() : "<i>")));
+						tmpRow.Select(weight => weight.HasValue ? weight.ToString() : "-")));
+				}
 
 				return stringBuilder.ToString();
 			}
