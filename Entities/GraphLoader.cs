@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -25,7 +26,7 @@ namespace MathGraph.Entities
 
 		private static Graph LoadFromMatrix(List<string> rows)
 		{
-			var nodesGrid = rows.Select(row => row.Split(' ')).ToArray();
+			var nodesGrid = rows.Select(row => row.Split(new char[] {' '}, StringSplitOptions.RemoveEmptyEntries)).ToArray();
 			var graph = new Graph();
 			for (int i = 0; i < nodesGrid.Length; i++)
 			{
